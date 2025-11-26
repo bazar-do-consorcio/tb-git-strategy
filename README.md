@@ -1,8 +1,8 @@
 # Repositório de Teste - Estratégia de Branching Git
 
-Este é um repositório de teste criado para demonstração da estratégia de branching do Git da empresa.
+Este é um repositório de teste criado para demonstração da estratégia de branching do Git da bazar
 
-## Estratégia de Branching da Empresa
+## Estratégia de Branching
 
 ### Fluxo de trabalho para features
 
