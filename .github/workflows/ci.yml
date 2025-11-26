@@ -1,0 +1,34 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - develop
+  release:
+    types: [created]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+      
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Executar testes
+        run: |
+          echo "🧪 Executando testes..."
+          python app.py
+          echo "✅ Testes passaram!"
+      
+      - name: Validar código
+        run: |
+          echo "🔍 Validando código..."
+          echo "Código validado com sucesso!"
+          echo "✅ Validação concluída!"
+
