@@ -1,25 +1,56 @@
 # Repositório de Teste - Estratégia de Branching Git
 
-Este é um repositório de teste criado para demonstração de estratégias de branching do Git.
+Este é um repositório de teste criado para demonstração da estratégia de branching do Git da bazar
 
-## Como usar
+## Estratégia de Branching
 
-Sinta-se à vontade para:
-- Criar branches
-- Fazer merges
-- Testar diferentes estratégias
-- Experimentar comandos Git
-- Fazer rebase
-- Resolver conflitos
+### Fluxo de trabalho para features
 
-## Estrutura inicial
+1. **Criar feature branch a partir de main:**
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feature
+   ```
 
-O repositório já vem com alguns branches e commits de exemplo:
+2. **Desenvolver e fazer commits:**
+   ```bash
+   git commit -m "feat: descrição da mudança"
+   ```
 
-- **main**: Branch principal (produção)
-- **develop**: Branch de desenvolvimento
-- **feature/nova-funcionalidade**: Branch de feature em desenvolvimento
-- **hotfix/correcao-urgente**: Branch de hotfix
+3. **Fazer push da feature:**
+   ```bash
+   git push origin feature
+   ```
+
+4. **Merge em develop (deploy automático):**
+   ```bash
+   git checkout develop
+   git pull origin develop
+   git merge feature
+   git push origin develop  # -> deploy automático
+   ```
+
+5. **Pull Request para main (code review):**
+   - Criar PR: `feature` → `main`
+   - Code review
+   - Após aprovação, merge em `main` → deploy automático
+
+### Resumo do fluxo
+
+```
+main (produção)
+  ↓
+feature (desenvolvimento)
+  ↓
+develop (deploy automático) + PR → main (code review → deploy)
+```
+
+## Estrutura de branches
+
+- **main**: Branch principal (produção) - deploy automático após merge
+- **develop**: Branch de desenvolvimento - deploy automático após push
+- **feature/***: Branches de features individuais
 
 ## Comandos úteis
 
@@ -33,28 +64,11 @@ O repositório já vem com alguns branches e commits de exemplo:
 git log --oneline --graph --all --decorate
 ```
 
-### Criar um novo branch de feature
-```bash
-git checkout -b feature/nome-da-feature
-```
+## CI/CD
 
-### Criar um novo branch de hotfix
-```bash
-git checkout -b hotfix/nome-do-hotfix
-```
+O workflow do GitHub Actions está configurado para:
+- Disparar em push para `develop` → deploy automático
+- Disparar quando uma release é criada
 
-### Fazer merge de uma feature
-```bash
-git checkout develop
-git merge feature/nova-funcionalidade
-```
-
-## Estratégias de Branching
-
-Este repositório demonstra o modelo **Git Flow**:
-- `main`: código em produção
-- `develop`: branch de desenvolvimento
-- `feature/*`: novas funcionalidades
-- `hotfix/*`: correções urgentes
-- `release/*`: preparação para release (pode ser criado conforme necessário)
+Veja `.github/workflows/ci.yml` para mais detalhes.
 
